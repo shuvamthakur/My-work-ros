@@ -233,22 +233,22 @@ void TeleopArrow::keyLoop()
     {
       case KEYCODE_LEFT:
         ROS_DEBUG("LEFT");
-        angular_ = 1.0;
+        angular_ = 0.3;
         dirty = true;
         break;
       case KEYCODE_RIGHT:
         ROS_DEBUG("RIGHT");
-        angular_ = -1.0;
+        angular_ = -0.3;
         dirty = true;
         break;
       case KEYCODE_UP:
         ROS_DEBUG("UP");
-        linear_ = 1.0;
+        linear_ = 0.5;
         dirty = true;
         break;
       case KEYCODE_DOWN:
         ROS_DEBUG("DOWN");
-        linear_ = -1.0;
+        linear_ = -0.3;
         dirty = true;
         break;
       case KEYCODE_Q:
@@ -258,8 +258,8 @@ void TeleopArrow::keyLoop()
    
 
     geometry_msgs::Twist twist;
-    twist.angular.z = a_scale_*angular_;
-    twist.linear.x = l_scale_*linear_;
+    twist.angular.z = angular_;
+    twist.linear.x = linear_;
     if(dirty ==true)
     {
       twist_pub_.publish(twist);    
