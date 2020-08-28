@@ -1,0 +1,28 @@
+<launch>
+<include file="$(find model)/launch/gazebo.launch"/>
+<include file="$(find model)/launch/display.launch"/>
+<node pkg="gmapping" type="slam_gmapping" respawn="false" name="slam_gmapping" output="screen">
+<param name="map_update_interval" value="2.0"/>
+<param name="maxUrange" value="6.0"/>
+<param name="iterations" value="1"/>
+<param name="linearUpdate" value="0.25"/>
+<param name="angularUpdate" value="0.262"/>
+<param name="temporalUpdate" value="-1.0"/>
+<param name="particles" value="300"/>
+<param name="xmin" value="-50.0"/>
+<param name="ymin" value="-50.0"/>
+<param name="xmax" value="50.0"/>
+<param name="ymax" value="50.0"/>
+<param name="base_frame" value="base_link"/>
+</node>
+<node pkg="move_base" type="move_base" respawn="false"
+name="move_base" output="screen">
+<rosparam file="$(find model)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+<rosparam file="$(find model)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+<rosparam file="$(find model)/config/local_costmap_params.yaml" command="load" />
+<rosparam file="$(find model)/config/global_costmap_params.yaml" command="load" />
+<rosparam file="$(find model)/config/base_local_planner_params.yaml" command="load" />
+<param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+<param name="controller_frequency" type="double" value="6.0" />
+</node>
+</launch>
